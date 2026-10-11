@@ -1,0 +1,81 @@
+// Measures in the _Measures table of munich_airbnb_report.pbix
+
+// ---- Market ----
+Total listings = COUNTROWS ( Listings )
+
+Active listings = CALCULATE ( [Total listings], Listings[is_active] = TRUE () )
+
+% active = DIVIDE ( [Active listings], [Total listings] )
+
+Hosts = DISTINCTCOUNT ( Listings[host_id] )
+
+Median price = MEDIAN ( Listings[price_normal_night] )
+
+Est. revenue = SUM ( Listings[est_revenue] )
+
+% entire homes =
+DIVIDE (
+    CALCULATE ( [Total listings], Listings[room_type] = "Entire home/apt" ),
+    [Total listings]
+)
+
+Median rating = MEDIAN ( Listings[rating_overall] )
+
+// share of the current selection, e.g. per host type
+Listing share =
+DIVIDE ( [Total listings], CALCULATE ( [Total listings], ALLSELECTED ( Listings ) ) )
+
+Revenue share =
+DIVIDE ( [Est. revenue], CALCULATE ( [Est. revenue], ALLSELECTED ( Listings ) ) )
+
+// ---- Districts ----
+Listings per km2 = DIVIDE ( [Total listings], SUM ( Districts[area_km2] ) )
+
+// ---- 56-night rule ----
+Above 56 nights = CALCULATE ( [Total listings], Listings[exceeds_56_nights] = TRUE () )
+
+% above 56 nights =
+DIVIDE (
+    [Above 56 nights],
+    CALCULATE (
+        [Total listings],
+        Listings[is_active] = TRUE (),
+        Listings[room_type] = "Entire home/apt"
+    )
+)
+
+// ---- Demand ----
+Total reviews = SUM ( 'Reviews monthly'[reviews] )
+
+Reviews last year = SUM ( 'Reviews monthly'[reviews_same_month_last_year] )
+
+Reviews YoY % = DIVIDE ( [Total reviews] - [Reviews last year], [Reviews last year] )
+
+// ---- Calendar ----
+// weighted by the number of listings per night and room type
+% unavailable =
+DIVIDE (
+    SUMX ( 'Calendar daily', 'Calendar daily'[listings] * 'Calendar daily'[share_unavailable] ),
+    SUM ( 'Calendar daily'[listings] )
+)
+
+Unavailable Oktoberfest =
+CALCULATE ( [% unavailable], 'Calendar daily'[is_oktoberfest] = TRUE () )
+
+Unavailable 4 weeks before =
+CALCULATE (
+    [% unavailable],
+    'Calendar daily'[night] >= DATE ( 2026, 8, 22 ),
+    'Calendar daily'[night] <= DATE ( 2026, 9, 18 )
+)
+
+// ---- Calculated columns ----
+// Listings: labels without the sort prefix ("2 75-124" -> "75-124")
+Price band = IF ( ISBLANK ( Listings[price_band] ), BLANK (), MID ( Listings[price_band], 3, 20 ) )
+
+Price band order = VALUE ( LEFT ( Listings[price_band], 1 ) )
+
+Host type = MID ( Listings[host_type], 3, 30 )
+
+// Reviews monthly: quarter of each month
+Quarter = "Q" & ROUNDUP ( MONTH ( 'Reviews monthly'[month_start] ) / 3, 0 )
