@@ -7,18 +7,18 @@ A two-page Power BI report on Munich's short-term rental market, built on the Po
 ## Report pages
 
 ### 1. Market overview
-![Market overview](images/01_market_overview.png)
+![Market overview](01_market_overview.png)
 
 6,865 listings from 5,225 hosts, median price 144 € per night. Professional hosts (5+ listings) run **13.7% of listings but earn 29.6% of the estimated revenue**. Reviews, used as a proxy for stays, grew from 4,055 in 2015 to 47,919 in 2025, with a clear dip in 2020 (COVID) and the strongest quarter in Q3 (summer and Oktoberfest).
 
 ### 2. Districts and prices
-![Districts and prices](images/02_districts_prices.png)
+![Districts and prices](02_districts_prices.png)
 
 Ludwigsvorstadt-Isarvorstadt, the district with the Oktoberfest grounds, has **212 listings per km²**, almost ten times the city average of 22. The three central districts Ludwigsvorstadt-Isarvorstadt, Maxvorstadt and Altstadt-Lehel earn **44% of all estimated revenue**. Altstadt-Lehel is the most expensive district at a median of 293 € per night.
 
 ## Data model
 
-![Data model](images/03_data_model.png)
+![Data model](03_data_model.png)
 
 | Table | Source in PostgreSQL | Rows | Role |
 |---|---|---|---|
