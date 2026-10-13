@@ -44,11 +44,7 @@ Calculated columns give clean labels that still sort correctly (`Price band`, `H
 
 All key figures were checked against the query results in the SQL repository (`results/*.csv`).
 
-## How to open
 
-1. Install [Power BI Desktop](https://www.microsoft.com/power-bi/desktop) (free, Windows).
-2. Open `munich_airbnb_report.pbix`. The data is imported, so the report works without a database.
-3. To refresh the data, build the database with the [SQL project](https://github.com/TMarkA/munich-airbnb-sql) and click **Home → Refresh** (server `localhost`, database `munich_airbnb`).
 
 A PDF export of the report is in [`munich_airbnb_report.pdf`](munich_airbnb_report.pdf).
 
