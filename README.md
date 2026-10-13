@@ -57,3 +57,6 @@ A PDF export of the report is in [`munich_airbnb_report.pdf`](munich_airbnb_repo
 ## Tools
 
 PostgreSQL · Power BI Desktop · Power Query · DAX
+
+Author: Mark Tereshchenko, M.Sc. Operations Research & Business Analytics
+
